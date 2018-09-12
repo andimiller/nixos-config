@@ -58,6 +58,8 @@
     google-chrome
     spotify
     gnupg
+    compton
+    cbatticon
   ];
 
   services.udev.packages = with pkgs; [
@@ -114,11 +116,12 @@
 
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
-  services.xserver.libinput.naturalScrolling = true;
+  services.xserver.libinput.naturalScrolling = true; # I blame macs
 
   # Enable the KDE Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.windowManager.awesome.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.extraUsers.andi = {
