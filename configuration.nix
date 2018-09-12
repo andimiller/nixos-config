@@ -58,7 +58,6 @@
     google-chrome
     spotify
     gnupg
-    fira-code
   ];
 
   services.udev.packages = with pkgs; [
@@ -66,6 +65,19 @@
   ];
 
   programs.zsh.enable = true;
+
+  fonts = {
+    fontconfig.enable = true;
+    enableFontDir = true;
+    enableGhostscriptFonts = true;
+    fonts = with pkgs; [
+      fira
+      fira-code
+      fira-mono
+      dejavu_fonts
+      ubuntu_font_family
+    ];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -103,7 +115,6 @@
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
   services.xserver.libinput.naturalScrolling = true;
-  
 
   # Enable the KDE Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
