@@ -60,6 +60,8 @@
     gnupg
     compton
     cbatticon
+    ruby
+    arandr
   ];
 
   services.udev.packages = with pkgs; [
@@ -85,7 +87,9 @@
   # started in user sessions.
   programs.bash.enableCompletion = true;
   # programs.mtr.enable = true;
-  programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
+  programs.gnupg.agent = { enable = true; enableSSHSupport = false; };
+
+  programs.ssh.startAgent = true;
 
   # List services that you want to enable:
 
@@ -113,6 +117,7 @@
   services.xserver.enable = true;
   services.xserver.layout = "gb";
   # services.xserver.xkbOptions = "eurosign:e";
+  #services.xserver.dpi = 144;
 
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
