@@ -55,13 +55,14 @@
     docker
     yubikey-personalization
     git
-    google-chrome
     spotify
     gnupg
     compton
     cbatticon
     ruby
     arandr
+    slock
+    steam
   ];
 
   services.udev.packages = with pkgs; [
@@ -91,6 +92,8 @@
 
   programs.ssh.startAgent = true;
 
+  hardware.opengl.driSupport32Bit = true;
+
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
@@ -112,6 +115,7 @@
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
