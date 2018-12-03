@@ -81,6 +81,9 @@
       fira-mono
       dejavu_fonts
       ubuntu_font_family
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
     ];
   };
 
