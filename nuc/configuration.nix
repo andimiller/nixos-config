@@ -98,6 +98,9 @@
     git
     htop
     k3s
+    nfs-utils
+    cifs-utils
+    samba
   ];
 
     services.udev.packages = with pkgs; [
@@ -135,6 +138,8 @@
 
   # List services that you want to enable:
 
+  boot.supportedFilesystems = [ "nfs" ];
+  services.rpcbind.enable = true;
   programs.ssh.startAgent = true;
 
   # Enable the OpenSSH daemon.
@@ -145,6 +150,7 @@
       PubkeyAcceptedAlgorithms +ssh-rsa
       TCPKeepAlive yes
     '';
+    forwardX11 = true;
   };
 
   # Open ports in the firewall.
@@ -152,6 +158,26 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = false;
+
+  fileSystems."/mount/Media" = {
+    device = "//storage.home.arpa/Media";
+    fsType = "cifs";
+    options = let
+      # this line prevents hanging on network split
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+    in ["${automount_opts},credentials=/etc/nixos/smb-secrets,file_mode=0777,dir_mode=0777"];
+  };
+
+  services.transmission = { 
+    enable = true; #Enable transmission daemon
+    openRPCPort = true; #Open firewall for RPC
+    settings = { #Override default settings
+      rpc-bind-address = "0.0.0.0"; 
+      rpc-whitelist = "127.0.0.1,192.168.1.170"; 
+      download-dir="/mount/Media/";
+    };
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
